@@ -1,4 +1,4 @@
-import { Injectable, OnDestroy, signal, inject } from '@angular/core';
+import { Injectable, OnDestroy, signal, inject, effect } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { environment } from '../../../environments/environment';
 import { AuthService } from './auth/auth.service';
@@ -8,24 +8,33 @@ export class WsService implements OnDestroy {
   private socket: Socket | null = null;
   connected = signal(false);
   private handlers = new Map<string, Set<(data: any) => void>>();
+  private currentIdentity: string | null = null;
   private auth = inject(AuthService);
-  private tokenCheckInterval: ReturnType<typeof setInterval> | undefined;
 
   constructor() {
-    if (this.auth.isLoggedIn()) {
+    // React to auth changes: an SPA login must attach the fresh admin
+    // identity; a logout must drop the old room membership.
+    effect(() => {
+      const identity = this.auth.currentUser()?.id ?? '';
+      if (typeof window === 'undefined') return;
+      if (identity !== this.currentIdentity) {
+        this.reconnectAs(identity);
+      }
+    });
+  }
+
+  private reconnectAs(identity: string): void {
+    this.disconnect();
+    this.currentIdentity = identity;
+    if (identity) {
       this.connect();
     }
-    const origLogout = this.auth.logout.bind(this.auth);
-    const self = this;
-    this.auth.logout = () => {
-      self.disconnect();
-      return origLogout();
-    };
   }
 
   private connect() {
     const token = this.auth.getToken();
-    if (!token || this.socket) return;
+    if (!token || !this.auth.isLoggedIn() || this.socket) return;
+    if (typeof window === 'undefined') return;
 
     this.socket = io(environment.wsUrl || undefined, {
       auth: { token },
@@ -38,7 +47,7 @@ export class WsService implements OnDestroy {
     });
 
     this.socket.on('disconnect', () => this.connected.set(false));
-    this.socket.on('connect_error', (err) => console.error('[WsService] connect error:', err.message));
+    this.socket.on('connect_error', (err) => console.error('[WsService] connect error:', err?.message));
 
     this.socket.onAny((event: string, data: any) => {
       this.handlers.get(event)?.forEach((h) => h(data));
@@ -59,6 +68,5 @@ export class WsService implements OnDestroy {
 
   ngOnDestroy() {
     this.disconnect();
-    if (this.tokenCheckInterval) clearInterval(this.tokenCheckInterval);
   }
 }

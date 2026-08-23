@@ -97,29 +97,65 @@ export class UserDetailComponent implements OnInit {
 
   goBack() { history.back(); }
 
-  viewTicket(url: string | undefined): void { if (url) { this.ticketModalUrl.set(url); this.showTicketModal.set(true); } }
+  /**
+   * Ticket/PDF paths from the backend are root-relative (`/upload/x.pdf`) —
+   * resolve them against the API base. Only same-origin /upload(s)/ URLs
+   * (or inline base64 PDFs) are ever trusted further.
+   */
+  private resolveFileUrl(url: string | undefined): string | null {
+    if (!url || typeof url !== 'string') return null;
+    const raw = url.trim();
+    if (!raw || raw.length > 512) return null;
+    if (/^data:application\/pdf;base64,[A-Za-z0-9+/=]+$/.test(raw)) return raw;
+    let absolute: string;
+    try {
+      absolute = new URL(raw, environment.apiUrl.admin).toString();
+    } catch {
+      return null;
+    }
+    try {
+      const target = new URL(absolute);
+      const trustedBase = new URL(environment.apiUrl.admin.replace(/\/api\/?$/, ''));
+      if (!/^https?:$/.test(target.protocol)) return null;
+      if (target.origin !== trustedBase.origin) return null;
+      if (!/^\/uploads?\//.test(target.pathname)) return null;
+      return absolute;
+    } catch {
+      return null;
+    }
+  }
+
+  viewTicket(url: string | undefined): void {
+    const resolved = this.resolveFileUrl(url);
+    if (resolved) { this.ticketModalUrl.set(resolved); this.showTicketModal.set(true); }
+  }
   downloadTicket(url: string | undefined): void {
     if (!url) return;
-    if (url.startsWith('data:')) {
+    if (/^data:application\/pdf;base64,[A-Za-z0-9+/=]+$/.test(url.trim())) {
       const a = document.createElement('a');
       a.href = url;
       a.download = 'ticket.pdf';
       a.click();
-    } else {
-      window.open(url, '_blank');
+      return;
     }
+    const resolved = this.resolveFileUrl(url);
+    if (resolved) window.open(resolved, '_blank');
   }
   closeTicketModal(): void { this.showTicketModal.set(false); this.ticketModalUrl.set(''); }
 
   showPassengerList(tripId: string): void {
+    if (!/^[a-zA-Z0-9_-]{1,64}$/.test(tripId)) return;
     const token = this.auth.getToken();
-    if (!token) return;
+    if (!token || !/^[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+\.[A-Za-z0-9-_]+$/.test(token)) return;
     window.open(
-      environment.apiUrl.admin + '/trips/passenger-list/' + tripId + '?token=' + token,
+      environment.apiUrl.admin + '/trips/passenger-list/' + tripId + '?token=' + encodeURIComponent(token),
       '_blank',
     );
   }
-  safeUrl(url: string) { return this.sanitizer.bypassSecurityTrustResourceUrl(url); }
+  safeUrl(url: string) {
+    const resolved = this.resolveFileUrl(url);
+    return this.sanitizer.bypassSecurityTrustResourceUrl(resolved ?? 'about:blank');
+  }
 
   genderLabel(g: string): string { return g === 'MALE' ? 'ذكر' : g === 'FEMALE' ? 'أنثى' : g; }
   methodLabel(m: string): string { return { bankak: 'بنكك', fawry: 'فوري', mashriq: 'المشرق', bravo: 'برافو' }[m] ?? m ?? '—'; }
