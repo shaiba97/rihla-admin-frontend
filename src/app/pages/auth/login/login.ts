@@ -5,12 +5,12 @@ import { Component, inject, signal } from '@angular/core'; import { Router } fro
     <div class="w-full max-w-md flex flex-col gap-6">
       <div class="flex flex-col items-center gap-3"><div class="w-16 h-16 rounded-2xl bg-white flex items-center justify-center"><img ngSrc="/adminLogo.png" width="40" height="40" priority alt="تفية" class="object-contain"></div><h1 class="text-2xl font-extrabold text-[var(--text-primary)]">لوحة الإدارة</h1><p class="text-sm text-[var(--text-muted)]">تفية — منصة حجز التذاكر</p></div>
       <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] p-6 flex flex-col gap-4">
-        <div class="flex flex-col gap-1.5"><label class="text-sm font-semibold text-[var(--text-primary)]">البريد الإلكتروني أو رقم الهاتف</label>
-          <input type="text" [ngModel]="identifier()" (ngModelChange)="identifier.set($event)" placeholder="admin@tafiya.com" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)] text-sm text-[var(--text-primary)] outline-none focus:border-[var(--text-primary)] transition-all"></div>
-        <div class="flex flex-col gap-1.5"><label class="text-sm font-semibold text-[var(--text-primary)]">كلمة المرور</label>
-          <input type="password" [ngModel]="password()" (ngModelChange)="password.set($event)" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)] text-sm text-[var(--text-primary)] outline-none focus:border-[var(--text-primary)] transition-all"></div>
+        <div class="flex flex-col gap-1.5"><label for="login-identifier" class="text-sm font-semibold text-[var(--text-primary)]">البريد الإلكتروني أو رقم الهاتف</label>
+          <input id="login-identifier" type="text" autocomplete="username" [ngModel]="identifier()" (ngModelChange)="identifier.set($event)" placeholder="admin@tafiya.com" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)] text-sm text-[var(--text-primary)] outline-none focus:border-[var(--text-primary)] transition-all"></div>
+        <div class="flex flex-col gap-1.5"><label for="login-password" class="text-sm font-semibold text-[var(--text-primary)]">كلمة المرور</label>
+          <input id="login-password" type="password" autocomplete="current-password" [ngModel]="password()" (ngModelChange)="password.set($event)" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-base)] text-sm text-[var(--text-primary)] outline-none focus:border-[var(--text-primary)] transition-all"></div>
         @if (error()) { <div class="px-4 py-3 rounded-xl bg-[var(--danger-light)] border border-red-200 text-sm text-[var(--danger)]">{{ error() }}</div> }
-        <button (click)="onLogin()" [disabled]="isLoading()" class="w-full py-3 rounded-xl bg-[var(--primary)] text-white text-sm font-bold hover:bg-[var(--primary-hover)] disabled:opacity-50 transition-all">{{ isLoading() ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول' }}</button>
+        <button type="button" (click)="onLogin()" [disabled]="isLoading()" class="w-full py-3 rounded-xl bg-[var(--primary)] text-white text-sm font-bold hover:bg-[var(--primary-hover)] disabled:opacity-50 transition-all">{{ isLoading() ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول' }}</button>
       </div>
     </div>
   </div>`

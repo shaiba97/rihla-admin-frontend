@@ -12,8 +12,8 @@ import { LucidePhone, LucideMail, LucidePlus, LucidePencil, LucideTrash2, Lucide
     <div dir="rtl" class="p-6">
       <div class="flex items-center justify-between mb-6">
         <h1 class="text-2xl font-extrabold text-[var(--text-primary)]">جهات الاتصال</h1>
-        <button (click)="openCreate()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--primary)] text-white text-sm font-bold hover:bg-[var(--primary-hover)] transition-all active:scale-95">
-          <svg lucidePlus class="w-4 h-4"></svg>
+        <button type="button" (click)="openCreate()" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--primary)] text-white text-sm font-bold hover:bg-[var(--primary-hover)] transition-all active:scale-95">
+          <svg aria-hidden="true" lucidePlus class="w-4 h-4"></svg>
           <span>إضافة جهة اتصال</span>
         </button>
       </div>
@@ -40,9 +40,9 @@ import { LucidePhone, LucideMail, LucidePlus, LucidePencil, LucideTrash2, Lucide
                   <td class="px-4 py-3">
                     <span class="flex items-center gap-2 font-semibold text-[var(--text-primary)]">
                       @if (c.type === 'whatsapp') {
-                        <svg lucidePhone class="w-4 h-4 text-green-500"></svg>
+                        <svg aria-hidden="true" lucidePhone class="w-4 h-4 text-green-500"></svg>
                       } @else if (c.type === 'email') {
-                        <svg lucideMail class="w-4 h-4 text-blue-500"></svg>
+                        <svg aria-hidden="true" lucideMail class="w-4 h-4 text-blue-500"></svg>
                       }
                       {{ c.type === 'whatsapp' ? 'واتساب' : c.type === 'email' ? 'بريد إلكتروني' : c.type }}
                     </span>
@@ -60,11 +60,11 @@ import { LucidePhone, LucideMail, LucidePlus, LucidePencil, LucideTrash2, Lucide
                   </td>
                   <td class="px-4 py-3">
                     <div class="flex items-center justify-end gap-2">
-                      <button (click)="startEdit(c)" class="p-2 rounded-lg hover:bg-[var(--primary-light)] text-[var(--text-muted)] hover:text-[var(--primary)] transition-all">
-                        <svg lucidePencil class="w-4 h-4"></svg>
+                      <button type="button" (click)="startEdit(c)" aria-label="تعديل جهة الاتصال" class="p-2 rounded-lg hover:bg-[var(--primary-light)] text-[var(--text-muted)] hover:text-[var(--primary)] transition-all">
+                        <svg aria-hidden="true" lucidePencil class="w-4 h-4"></svg>
                       </button>
-                      <button (click)="startDelete(c)" class="p-2 rounded-lg hover:bg-red-50 text-[var(--text-muted)] hover:text-red-500 transition-all">
-                        <svg lucideTrash2 class="w-4 h-4"></svg>
+                      <button type="button" (click)="startDelete(c)" aria-label="حذف جهة الاتصال" class="p-2 rounded-lg hover:bg-red-50 text-[var(--text-muted)] hover:text-red-500 transition-all">
+                        <svg aria-hidden="true" lucideTrash2 class="w-4 h-4"></svg>
                       </button>
                     </div>
                   </td>
@@ -78,11 +78,11 @@ import { LucidePhone, LucideMail, LucidePlus, LucidePencil, LucideTrash2, Lucide
 
     @if (showForm()) {
       <div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" (click)="showForm.set(false)">
-        <div class="bg-[var(--bg-card)] rounded-2xl w-full max-w-md p-6 shadow-xl" (click)="\$event.stopPropagation()">
+        <div role="dialog" aria-modal="true" aria-labelledby="support-contact-title" class="bg-[var(--bg-card)] rounded-2xl w-full max-w-md p-6 shadow-xl" (click)="\$event.stopPropagation()">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-bold text-[var(--text-primary)]">{{ editingId() ? 'تعديل جهة اتصال' : 'إضافة جهة اتصال' }}</h2>
-            <button (click)="showForm.set(false)" class="p-2 rounded-lg hover:bg-[var(--bg-base)] text-[var(--text-muted)]">
-              <svg lucideX class="w-5 h-5"></svg>
+            <h2 id="support-contact-title" class="text-lg font-bold text-[var(--text-primary)]">{{ editingId() ? 'تعديل جهة اتصال' : 'إضافة جهة اتصال' }}</h2>
+            <button type="button" (click)="showForm.set(false)" aria-label="إغلاق" class="p-2 rounded-lg hover:bg-[var(--bg-base)] text-[var(--text-muted)]">
+              <svg aria-hidden="true" lucideX class="w-5 h-5"></svg>
             </button>
           </div>
           <div class="flex flex-col gap-4">
@@ -107,10 +107,10 @@ import { LucidePhone, LucideMail, LucidePlus, LucidePencil, LucideTrash2, Lucide
             </div>
           </div>
           <div class="flex items-center gap-3 mt-6">
-            <button (click)="save()" [disabled]="saving()" class="flex-1 py-3 rounded-xl bg-[var(--primary)] text-white text-sm font-bold hover:bg-[var(--primary-hover)] transition-all active:scale-95 disabled:opacity-40">
+            <button type="button" (click)="save()" [disabled]="saving()" class="flex-1 py-3 rounded-xl bg-[var(--primary)] text-white text-sm font-bold hover:bg-[var(--primary-hover)] transition-all active:scale-95 disabled:opacity-40">
               @if (saving()) { جاري الحفظ... } @else { حفظ }
             </button>
-            <button (click)="showForm.set(false)" class="px-6 py-3 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] text-sm font-bold hover:bg-[var(--bg-base)] transition-all">إلغاء</button>
+            <button type="button" (click)="showForm.set(false)" class="px-6 py-3 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] text-sm font-bold hover:bg-[var(--bg-base)] transition-all">إلغاء</button>
           </div>
         </div>
       </div>
@@ -118,17 +118,17 @@ import { LucidePhone, LucideMail, LucidePlus, LucidePencil, LucideTrash2, Lucide
 
     @if (showDelete()) {
       <div class="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" (click)="showDelete.set(false)">
-        <div class="bg-[var(--bg-card)] rounded-2xl w-full max-w-sm p-6 shadow-xl text-center" (click)="\$event.stopPropagation()">
+        <div role="dialog" aria-modal="true" aria-labelledby="delete-contact-title" class="bg-[var(--bg-card)] rounded-2xl w-full max-w-sm p-6 shadow-xl text-center" (click)="\$event.stopPropagation()">
           <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mx-auto mb-4">
-            <svg lucideTrash2 class="w-6 h-6 text-red-500"></svg>
+            <svg aria-hidden="true" lucideTrash2 class="w-6 h-6 text-red-500"></svg>
           </div>
-          <h2 class="text-lg font-bold text-[var(--text-primary)] mb-2">حذف جهة الاتصال؟</h2>
+          <h2 id="delete-contact-title" class="text-lg font-bold text-[var(--text-primary)] mb-2">حذف جهة الاتصال؟</h2>
           <p class="text-sm text-[var(--text-muted)] mb-6">هل أنت متأكد من حذف هذه الجهة؟ لا يمكن التراجع عن هذا الإجراء.</p>
           <div class="flex gap-3">
-            <button (click)="confirmDelete()" [disabled]="saving()" class="flex-1 py-3 rounded-xl bg-red-500 text-white text-sm font-bold hover:bg-red-600 transition-all active:scale-95 disabled:opacity-40">
+            <button type="button" (click)="confirmDelete()" [disabled]="saving()" class="flex-1 py-3 rounded-xl bg-red-500 text-white text-sm font-bold hover:bg-red-600 transition-all active:scale-95 disabled:opacity-40">
               @if (saving()) { جاري الحذف... } @else { حذف }
             </button>
-            <button (click)="showDelete.set(false)" class="flex-1 py-3 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] text-sm font-bold hover:bg-[var(--bg-base)] transition-all">إلغاء</button>
+            <button type="button" (click)="showDelete.set(false)" class="flex-1 py-3 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] text-sm font-bold hover:bg-[var(--bg-base)] transition-all">إلغاء</button>
           </div>
         </div>
       </div>

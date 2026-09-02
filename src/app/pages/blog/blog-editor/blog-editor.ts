@@ -15,21 +15,21 @@ import { RichTextEditorComponent } from '../../../shared/rich-text-editor/rich-t
         <!-- HEADER -->
         <div class="flex items-center justify-between mb-6">
           <div class="flex items-center gap-3">
-            <a routerLink="/blog" class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-[var(--primary-light)] text-[var(--text-secondary)] hover:text-[var(--primary)] transition-all no-underline">
-              <svg lucideArrowRight class="w-5 h-5"></svg>
+            <a routerLink="/blog" aria-label="العودة إلى المقالات" class="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-[var(--primary-light)] text-[var(--text-secondary)] hover:text-[var(--primary)] transition-all no-underline">
+              <svg aria-hidden="true" lucideArrowRight class="w-5 h-5"></svg>
             </a>
             <div>
               <h1 class="text-xl font-extrabold text-[var(--text-primary)]">{{ isNew() ? 'مقال جديد' : 'تعديل المقال' }}</h1>
               <p class="text-xs text-[var(--text-secondary)]">أنشئ محتوى غني ومخصص</p>
             </div>
           </div>
-          <button (click)="save()"
+          <button type="button" (click)="save()"
             [disabled]="saving()"
             class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[var(--primary)] text-white text-sm font-bold hover:bg-[var(--primary-hover)] active:scale-95 transition-all disabled:opacity-50 shadow-sm">
             @if (saving()) {
-              <svg lucideLoaderCircle class="w-4 h-4 animate-spin"></svg>
+              <svg aria-hidden="true" lucideLoaderCircle class="w-4 h-4 animate-spin"></svg>
             } @else {
-              <svg lucideSave class="w-4 h-4"></svg>
+              <svg aria-hidden="true" lucideSave class="w-4 h-4"></svg>
             }
             <span>{{ saving() ? 'جاري الحفظ...' : 'نشر' }}</span>
           </button>
@@ -50,15 +50,15 @@ import { RichTextEditorComponent } from '../../../shared/rich-text-editor/rich-t
                   @if (coverImage()) {
                     <div class="relative rounded-xl overflow-hidden border border-[var(--border)]">
                       <img [src]="getFileUrl(coverImage()!)" class="w-full h-48 object-cover" alt="صورة الغلاف">
-                      <button type="button" (click)="removeCoverImage()"
+                      <button type="button" (click)="removeCoverImage()" aria-label="إزالة صورة الغلاف"
                         class="absolute top-2 left-2 w-8 h-8 flex items-center justify-center rounded-full bg-black/50 text-white hover:bg-black/70 transition-all">
-                        <svg lucideX class="w-4 h-4"></svg>
+                        <svg aria-hidden="true" lucideX class="w-4 h-4"></svg>
                       </button>
                     </div>
                   } @else {
-                    <div (click)="fileInput.click()"
+                    <div (click)="fileInput.click()" (keydown.enter)="fileInput.click()" role="button" tabindex="0"
                       class="flex flex-col items-center justify-center gap-2 h-40 rounded-xl border-2 border-dashed border-[var(--border)] bg-[var(--bg-base)] cursor-pointer hover:border-[var(--primary)] hover:bg-[var(--primary)]/5 transition-all">
-                      <svg lucideImage class="w-10 h-10 text-[var(--text-muted)]"></svg>
+                      <svg aria-hidden="true" lucideImage class="w-10 h-10 text-[var(--text-muted)]"></svg>
                       <span class="text-sm text-[var(--text-muted)]">انقر لاختيار صورة الغلاف</span>
                       <span class="text-xs text-[var(--text-muted)]">JPEG, PNG, WebP, HEIC — حد أقصى 10MB</span>
                     </div>
@@ -67,7 +67,7 @@ import { RichTextEditorComponent } from '../../../shared/rich-text-editor/rich-t
                     (change)="uploadCoverImage($event)" class="hidden">
                   @if (uploading()) {
                     <div class="flex items-center gap-2 text-sm text-[var(--text-secondary)]">
-                      <svg lucideUpload class="w-4 h-4 animate-bounce"></svg>
+                      <svg aria-hidden="true" lucideUpload class="w-4 h-4 animate-bounce"></svg>
                       <span>جاري رفع الصورة...</span>
                     </div>
                   }

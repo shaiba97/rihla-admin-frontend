@@ -1,20 +1,20 @@
-<div dir="rtl" class="p-6 flex flex-col gap-6">
-  <button (click)="goBack()" class="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition w-fit text-sm">
-    <svg lucideArrowRight class="w-4 h-4"></svg>
+<section dir="rtl" class="p-6 flex flex-col gap-6">
+  <button type="button" (click)="goBack()" class="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition w-fit text-sm">
+    <svg aria-hidden="true" lucideArrowRight class="w-4 h-4"></svg>
     العودة
   </button>
 
   @if (isLoading()) {
-    <div class="flex items-center justify-center py-20"><svg lucideLoaderCircle class="w-8 h-8 animate-spin text-[var(--text-primary)]"></svg></div>
+    <div class="flex items-center justify-center py-20"><svg aria-hidden="true" lucideLoaderCircle class="w-8 h-8 animate-spin text-[var(--text-primary)]"></svg></div>
   } @else if (user()) {
     @let u = user();
 
     <!-- SECTION 1: PERSONAL DETAILS + BOOKINGS + AWARDS SUMMARY -->
-    <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] p-6 flex flex-col gap-5">
+    <section aria-labelledby="user-detail-name" class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] p-6 flex flex-col gap-5">
       <div class="flex items-center gap-4">
-        <div class="w-14 h-14 rounded-full bg-[var(--primary)] flex items-center justify-center"><svg lucideUser class="w-7 h-7 text-white"></svg></div>
+        <div class="w-14 h-14 rounded-full bg-[var(--primary)] flex items-center justify-center"><svg aria-hidden="true" lucideUser class="w-7 h-7 text-white"></svg></div>
         <div class="flex flex-col">
-          <span class="text-lg font-bold text-[var(--text-primary)]">{{ u.name }}</span>
+          <h1 id="user-detail-name" class="text-lg font-bold text-[var(--text-primary)]">{{ u.name }}</h1>
           <span class="px-2 py-0.5 rounded-full text-xs font-bold w-fit mt-1"
             [ngClass]="u.role === 'COMPANY' ? 'bg-purple-100 text-purple-700' : u.role === 'ADMIN' ? 'bg-black text-white' : 'bg-blue-100 text-blue-700'">
             {{ u.role === 'COMPANY' ? 'شركة' : 'مستخدم' }}
@@ -58,24 +58,24 @@
           }
         </div>
       }
-    </div>
+    </section>
 
     <!-- SECTION 2: AWARDS CARD — DETAILED TABLE -->
     @if (u.role === 'USER' || u.role === 'CUSTOMER') {
-      <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
+      <section aria-labelledby="awards-title" class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
         <div class="px-5 py-4 border-b border-[var(--border)] flex items-center justify-between">
-          <h2 class="text-base font-bold text-[var(--text-primary)]">المكافآت</h2>
+          <h2 id="awards-title" class="text-base font-bold text-[var(--text-primary)]">المكافآت</h2>
           @if (userAwards(); as a) {
             <span class="text-xs text-[var(--text-muted)]">{{ toArabic(a.approvedCount) }} مقبولة • {{ toArabic(a.count) }} إجمالي</span>
           }
         </div>
         @if (awardsLoading()) {
           <div class="flex items-center justify-center py-10">
-            <svg class="w-5 h-5 animate-spin text-[var(--text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.2-8.4"/></svg>
+            <svg aria-hidden="true" class="w-5 h-5 animate-spin text-[var(--text-muted)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.2-8.4"/></svg>
           </div>
         } @else if (!userAwards() || userAwards().awards.length === 0) {
           <div class="flex flex-col items-center py-10 text-[var(--text-muted)]">
-            <svg class="w-8 h-8 opacity-30 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 14a7.5 7.5 0 0 0-5 0"/><path d="m8 21 4-4 4 4"/></svg>
+            <svg aria-hidden="true" class="w-8 h-8 opacity-30 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 14a7.5 7.5 0 0 0-5 0"/><path d="m8 21 4-4 4 4"/></svg>
             <p class="text-sm">لا توجد مكافآت</p>
           </div>
         } @else {
@@ -125,14 +125,14 @@
             </div>
           }
         }
-      </div>
+      </section>
     }
 
-    <!-- SECTION 3: USER — BOOKING HISTORY -->
+    <!-- SECTION 3: USER -- BOOKING HISTORY -->
     @if (u.role === 'USER' || u.role === 'CUSTOMER') {
-      <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
+      <section aria-labelledby="bookings-title" class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
         <div class="px-5 py-4 border-b border-[var(--border)]">
-          <h2 class="text-base font-bold text-[var(--text-primary)]">سجل الحجوزات ({{ toArabic((u.Booking ?? []).length) }})</h2>
+          <h2 id="bookings-title" class="text-base font-bold text-[var(--text-primary)]">سجل الحجوزات ({{ toArabic((u.Booking ?? []).length) }})</h2>
         </div>
         @if (u.Booking?.length > 0) {
           <div class="overflow-x-auto">
@@ -165,8 +165,8 @@
                       <td class="px-4 py-3">
                         @if (b.status === 'CONFIRMED') {
                           <div class="flex items-center gap-1">
-                            <button (click)="viewTicket(b.TicketPDF?.ticketUrl)" class="flex items-center gap-1 px-2 py-1 rounded-lg border border-[var(--border)] text-[var(--text-primary)] text-xs font-bold active:scale-95 transition-all hover:bg-[var(--bg-base)]"><svg lucideEye class="w-3 h-3"></svg> عرض</button>
-                            <button (click)="downloadTicket(b.TicketPDF?.ticketUrl)" class="flex items-center gap-1 px-2 py-1 rounded-lg bg-[var(--primary)] text-white text-xs font-bold active:scale-95 transition-all"><svg lucideDownload class="w-3 h-3"></svg> تحميل</button>
+                            <button type="button" (click)="viewTicket(b.TicketPDF?.ticketUrl)" class="flex items-center gap-1 px-2 py-1 rounded-lg border border-[var(--border)] text-[var(--text-primary)] text-xs font-bold active:scale-95 transition-all hover:bg-[var(--bg-base)]"><svg aria-hidden="true" lucideEye class="w-3 h-3"></svg> عرض</button>
+                            <button type="button" (click)="downloadTicket(b.TicketPDF?.ticketUrl)" class="flex items-center gap-1 px-2 py-1 rounded-lg bg-[var(--primary)] text-white text-xs font-bold active:scale-95 transition-all"><svg aria-hidden="true" lucideDownload class="w-3 h-3"></svg> تحميل</button>
                           </div>
                         }
                       </td>
@@ -179,31 +179,31 @@
           <div class="flex items-center justify-between px-5 py-3 border-t border-[var(--border)] bg-[var(--bg-base)]">
             <span class="text-xs text-[var(--text-muted)]">{{ toArabic(u.Booking.length) }} حجز</span>
             <div class="flex items-center gap-1">
-              <button (click)="bookingsPage.set(bookingsPage() - 1)" [disabled]="bookingsPage() <= 1" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border border-[var(--border)] transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[var(--bg-card)]">السابق</button>
+              <button type="button" (click)="bookingsPage.set(bookingsPage() - 1)" [disabled]="bookingsPage() <= 1" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border border-[var(--border)] transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[var(--bg-card)]">السابق</button>
               @for (p of [].constructor(bookingsTotalPages()); track $index) {
-                <button (click)="bookingsPage.set($index + 1)" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border border-[var(--border)] transition-all hover:bg-[var(--bg-card)]" [ngClass]="bookingsPage() === $index + 1 ? 'bg-[var(--text-primary)] text-white border-[var(--text-primary)]' : 'text-[var(--text-muted)]'">{{ toArabic($index + 1) }}</button>
+                <button type="button" (click)="bookingsPage.set($index + 1)" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border border-[var(--border)] transition-all hover:bg-[var(--bg-card)]" [ngClass]="bookingsPage() === $index + 1 ? 'bg-[var(--text-primary)] text-white border-[var(--text-primary)]' : 'text-[var(--text-muted)]'">{{ toArabic($index + 1) }}</button>
               }
-              <button (click)="bookingsPage.set(bookingsPage() + 1)" [disabled]="bookingsPage() >= bookingsTotalPages()" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border border-[var(--border)] transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[var(--bg-card)]">التالي</button>
+              <button type="button" (click)="bookingsPage.set(bookingsPage() + 1)" [disabled]="bookingsPage() >= bookingsTotalPages()" class="px-2.5 py-1.5 rounded-lg text-xs font-bold border border-[var(--border)] transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:bg-[var(--bg-card)]">التالي</button>
             </div>
           </div>
         } @else {
           <div class="flex flex-col items-center justify-center py-12 text-[var(--text-muted)]"><p class="text-sm">لا توجد حجوزات</p></div>
         }
-      </div>
+      </section>
     }
 
     <!-- SECTION 4: COMPANY — BUS DETAILS -->
     @if (u.role === 'COMPANY') {
-      <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
+      <section aria-labelledby="buses-title" class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
         <div class="px-5 py-4 border-b border-[var(--border)]">
-          <h2 class="text-base font-bold text-[var(--text-primary)]">الحافلات ({{ toArabic((u.Bus ?? []).length) }})</h2>
+          <h2 id="buses-title" class="text-base font-bold text-[var(--text-primary)]">الحافلات ({{ toArabic((u.Bus ?? []).length) }})</h2>
         </div>
         @if (u.Bus?.length > 0) {
           <div class="flex flex-col divide-y divide-[var(--border)]">
             @for (bus of u.Bus; track bus.id) {
               <div class="px-5 py-4 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                  <div class="w-10 h-10 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg lucideBus class="w-5 h-5 text-[var(--primary)]"></svg></div>
+                  <div class="w-10 h-10 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg aria-hidden="true" lucideBus class="w-5 h-5 text-[var(--primary)]"></svg></div>
                   <div class="flex flex-col">
                     <span class="text-sm font-bold text-[var(--text-primary)]">{{ bus.name }}</span>
                     <span class="text-xs text-[var(--text-muted)]">{{ bus.plate?.numbers ?? '' }} / {{ bus.chairs }} مقعد</span>
@@ -216,13 +216,13 @@
         } @else {
           <div class="flex flex-col items-center justify-center py-12 text-[var(--text-muted)]"><p class="text-sm">لا توجد حافلات</p></div>
         }
-      </div>
+      </section>
 
       <!-- SECTION 5: COMPANY — TRIPS TABLE -->
       @if (u.Bus?.length > 0) {
-        <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
+        <section aria-labelledby="trips-title" class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
           <div class="px-5 py-4 border-b border-[var(--border)]">
-            <h2 class="text-base font-bold text-[var(--text-primary)]">الرحلات ({{ toArabic(allTrips().length) }})</h2>
+            <h2 id="trips-title" class="text-base font-bold text-[var(--text-primary)]">الرحلات ({{ toArabic(allTrips().length) }})</h2>
           </div>
           @if (allTrips().length > 0) {
             <div class="overflow-x-auto">
@@ -244,7 +244,7 @@
                       <td class="px-4 py-3 text-[var(--text-primary)] font-medium">{{ t.busName }}</td>
                       <td class="px-4 py-3">
                         <div class="flex items-center gap-1">
-                          <svg lucideMapPin class="w-3.5 h-3.5 text-[var(--primary)]"></svg>
+                          <svg aria-hidden="true" lucideMapPin class="w-3.5 h-3.5 text-[var(--primary)]"></svg>
                           <span class="text-[var(--text-primary)]">{{ t.fromCity }}</span>
                           <span class="text-[var(--text-muted)]">←</span>
                           <span class="text-[var(--text-primary)]">{{ t.toCity }}</span>
@@ -267,7 +267,7 @@
                       <td class="px-4 py-3 text-[var(--text-muted)] font-medium tabular-nums">{{ formatAmount(t._platformFee ?? 0) }} ج</td>
                       <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700">{{ t.status }}</span></td>
                       <td class="px-4 py-3">
-                        <button (click)="showPassengerList(t.id)" class="flex items-center gap-1 px-2 py-1 rounded-lg bg-[var(--text-primary)] text-white text-xs font-bold active:scale-95 transition-all"><svg lucideUsers class="w-3 h-3"></svg> كشف الركاب</button>
+                        <button type="button" (click)="showPassengerList(t.id)" class="flex items-center gap-1 px-2 py-1 rounded-lg bg-[var(--text-primary)] text-white text-xs font-bold active:scale-95 transition-all"><svg aria-hidden="true" lucideUsers class="w-3 h-3"></svg> كشف الركاب</button>
                       </td>
                     </tr>
                   }
@@ -277,18 +277,18 @@
           } @else {
             <div class="flex flex-col items-center justify-center py-12 text-[var(--text-muted)]"><p class="text-sm">لا توجد رحلات</p></div>
           }
-        </div>
+        </section>
       }
     }
   }
-</div>
+</section>
 
 @if (showTicketModal()) {
   <div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4" (click)="closeTicketModal()">
-    <div class="w-full max-w-4xl h-[90vh] bg-[var(--bg-card)] rounded-2xl flex flex-col shadow-2xl overflow-hidden" (click)="$event.stopPropagation()">
+    <div role="dialog" aria-modal="true" aria-labelledby="ticket-title" class="w-full max-w-4xl h-[90vh] bg-[var(--bg-card)] rounded-2xl flex flex-col shadow-2xl overflow-hidden" (click)="$event.stopPropagation()">
       <div class="flex items-center justify-between px-5 py-4 border-b border-[var(--border)]">
-        <h3 class="text-base font-bold text-[var(--text-primary)]">التذكرة</h3>
-        <button (click)="closeTicketModal()" class="w-8 h-8 flex items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-base)] transition-all"><svg lucideX class="w-4 h-4"></svg></button>
+        <h3 id="ticket-title" class="text-base font-bold text-[var(--text-primary)]">التذكرة</h3>
+        <button type="button" (click)="closeTicketModal()" class="w-8 h-8 flex items-center justify-center rounded-lg border border-[var(--border)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-base)] transition-all"><svg aria-hidden="true" lucideX class="w-4 h-4"></svg></button>
       </div>
       <div class="flex-1 bg-[var(--bg-base)]">
         <iframe [src]="safeUrl(ticketModalUrl())" class="w-full h-full border-0"></iframe>

@@ -1,4 +1,4 @@
-<div dir="rtl" class="min-h-screen bg-[var(--bg-base)]">
+<section dir="rtl" class="min-h-screen bg-[var(--bg-base)]">
 
   @if (isLoading()) {
     <div class="p-6 flex flex-col gap-6">
@@ -15,9 +15,9 @@
 
   @if (!isLoading() && error()) {
     <div class="flex flex-col items-center justify-center h-screen gap-5">
-      <div class="w-16 h-16 rounded-full bg-[var(--danger-light)] flex items-center justify-center"><svg lucideAlertCircle class="w-8 h-8 text-[var(--danger)]"></svg></div>
+      <div class="w-16 h-16 rounded-full bg-[var(--danger-light)] flex items-center justify-center"><svg aria-hidden="true" lucideAlertCircle class="w-8 h-8 text-[var(--danger)]"></svg></div>
       <p class="text-[var(--text-primary)] font-semibold">{{ error() }}</p>
-      <button (click)="load()" class="px-5 py-2.5 rounded-xl bg-[var(--primary)] text-white font-bold text-sm hover:bg-[var(--primary-hover)] transition-all">حاول مجدداً</button>
+      <button type="button" (click)="load()" class="px-5 py-2.5 rounded-xl bg-[var(--primary)] text-white font-bold text-sm hover:bg-[var(--primary-hover)] transition-all">حاول مجدداً</button>
     </div>
   }
 
@@ -31,11 +31,11 @@
         <div class="absolute -bottom-12 -right-6 w-40 h-40 rounded-full bg-white/5 pointer-events-none"></div>
         <div class="relative z-10 flex items-start justify-between gap-2">
           <div class="flex flex-col gap-1">
-            <div class="flex items-center gap-1.5"><svg lucideZap class="w-3.5 h-3.5 text-white/70"></svg><span class="text-white/70 text-[11px] font-medium">{{ greeting() }}، مدير النظام</span></div>
+            <div class="flex items-center gap-1.5"><svg aria-hidden="true" lucideZap class="w-3.5 h-3.5 text-white/70"></svg><span class="text-white/70 text-[11px] font-medium">{{ greeting() }}، مدير النظام</span></div>
             <h1 class="text-xl font-extrabold text-white leading-tight">لوحة تحكم تفية</h1>
           </div>
           @if (d.platform?.pendingPaymentsRequiringAction > 0) {
-            <button (click)="goTo('/financial')" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[var(--warning)] text-white text-[10px] font-bold animate-pulse whitespace-nowrap"><svg lucideAlertCircle class="w-3 h-3"></svg>{{ toArabic(d.platform.pendingPaymentsRequiringAction) }}</button>
+            <button type="button" (click)="goTo('/financial')" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[var(--warning)] text-white text-[10px] font-bold animate-pulse whitespace-nowrap"><svg aria-hidden="true" lucideAlertCircle class="w-3 h-3"></svg>{{ toArabic(d.platform.pendingPaymentsRequiringAction) }}</button>
           }
         </div>
         <div class="relative z-10 flex gap-2 mt-4 overflow-x-auto scrollbar-hide">
@@ -53,24 +53,24 @@
       <div class="px-4 mt-4 pb-4 flex flex-col gap-4">
         <!-- Metric cards horizontal scroll -->
         <div class="flex gap-3 overflow-x-auto scrollbar-hide">
-          <div class="flex-shrink-0 w-44 flex flex-col gap-2 p-3 bg-[var(--bg-card)] rounded-2xl border-2 border-[var(--primary)]" (click)="goTo('/financial')">
-            <div class="w-8 h-8 rounded-xl bg-[var(--primary)] flex items-center justify-center"><svg lucideBadgeDollarSign class="w-4 h-4 text-white"></svg></div>
+          <div class="flex-shrink-0 w-44 flex flex-col gap-2 p-3 bg-[var(--bg-card)] rounded-2xl border-2 border-[var(--primary)]" role="button" tabindex="0" (keydown.enter)="goTo('/financial')" (click)="goTo('/financial')">
+            <div class="w-8 h-8 rounded-xl bg-[var(--primary)] flex items-center justify-center"><svg aria-hidden="true" lucideBadgeDollarSign class="w-4 h-4 text-white"></svg></div>
             <div class="flex flex-col gap-0.5"><span class="text-[10px] font-medium text-[var(--text-muted)]">إجمالي الإيرادات</span><span class="text-base font-extrabold text-[var(--text-primary)] tabular-nums">{{ fmtAmount(d.revenue?.totalRevenue ?? 0) }} <span class="text-[9px] font-medium text-[var(--text-muted)]">ج</span></span></div>
           </div>
-          <div class="flex-shrink-0 w-40 flex flex-col gap-2 p-3 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)]" (click)="goTo('/users')">
-            <div class="w-8 h-8 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg lucideUsers class="w-4 h-4 text-[var(--text-primary)]"></svg></div>
+          <div class="flex-shrink-0 w-40 flex flex-col gap-2 p-3 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)]" role="button" tabindex="0" (keydown.enter)="goTo('/users')" (click)="goTo('/users')">
+            <div class="w-8 h-8 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg aria-hidden="true" lucideUsers class="w-4 h-4 text-[var(--text-primary)]"></svg></div>
             <div class="flex flex-col gap-0.5"><span class="text-[10px] font-medium text-[var(--text-muted)]">المستخدمين</span><span class="text-base font-extrabold text-[var(--text-primary)] tabular-nums">{{ toArabic(d.users?.total ?? 0) }}</span></div>
           </div>
-          <div class="flex-shrink-0 w-40 flex flex-col gap-2 p-3 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)]" (click)="goTo('/payout')">
-            <div class="w-8 h-8 rounded-xl bg-[var(--warning-light)] flex items-center justify-center"><svg lucideCircleDollarSign class="w-4 h-4 text-[var(--warning)]"></svg></div>
+          <div class="flex-shrink-0 w-40 flex flex-col gap-2 p-3 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)]" role="button" tabindex="0" (keydown.enter)="goTo('/payout')" (click)="goTo('/payout')">
+            <div class="w-8 h-8 rounded-xl bg-[var(--warning-light)] flex items-center justify-center"><svg aria-hidden="true" lucideCircleDollarSign class="w-4 h-4 text-[var(--warning)]"></svg></div>
             <div class="flex flex-col gap-0.5"><span class="text-[10px] font-medium text-[var(--text-muted)]">مستحقات الشركات</span><span class="text-base font-extrabold text-[var(--text-primary)] tabular-nums">{{ fmtAmount(d.payout?.totalUnpaid ?? 0) }} <span class="text-[9px] font-medium text-[var(--text-muted)]">ج</span></span></div>
           </div>
-          <div class="flex-shrink-0 w-40 flex flex-col gap-2 p-3 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)]" (click)="goTo('/financial')">
-            <div class="w-8 h-8 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg lucideTicket class="w-4 h-4 text-[var(--text-primary)]"></svg></div>
+          <div class="flex-shrink-0 w-40 flex flex-col gap-2 p-3 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)]" role="button" tabindex="0" (keydown.enter)="goTo('/financial')" (click)="goTo('/financial')">
+            <div class="w-8 h-8 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg aria-hidden="true" lucideTicket class="w-4 h-4 text-[var(--text-primary)]"></svg></div>
             <div class="flex flex-col gap-0.5"><span class="text-[10px] font-medium text-[var(--text-muted)]">الحجوزات</span><span class="text-base font-extrabold text-[var(--text-primary)] tabular-nums">{{ toArabic(d.bookings?.total ?? 0) }}</span></div>
           </div>
           <div class="flex-shrink-0 w-40 flex flex-col gap-2 p-3 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)]">
-            <div class="w-8 h-8 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg lucideBus class="w-4 h-4 text-[var(--text-primary)]"></svg></div>
+            <div class="w-8 h-8 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg aria-hidden="true" lucideBus class="w-4 h-4 text-[var(--text-primary)]"></svg></div>
             <div class="flex flex-col gap-0.5"><span class="text-[10px] font-medium text-[var(--text-muted)]">العمليات</span><span class="text-base font-extrabold text-[var(--text-primary)] tabular-nums">{{ toArabic(d.operations?.activeTrips ?? 0) }}</span></div>
           </div>
         </div>
@@ -79,7 +79,7 @@
         @if (d.pendingActions?.length > 0) {
           <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--warning)] overflow-hidden">
             <div class="flex items-center gap-2 px-4 py-3 bg-[var(--warning-light)]/40 border-b border-[var(--border)]">
-              <svg lucideClock class="w-4 h-4 text-[var(--warning)]"></svg>
+              <svg aria-hidden="true" lucideClock class="w-4 h-4 text-[var(--warning)]"></svg>
               <span class="text-sm font-bold text-[var(--text-primary)]">يحتاج تدخلك</span>
               <span class="px-1.5 py-0.5 rounded-full bg-[var(--warning-light)] text-[var(--warning)] text-[10px] font-bold">{{ toArabic(d.pendingActions.length) }}</span>
             </div>
@@ -87,12 +87,12 @@
               @for (p of d.pendingActions; track p.id) {
                 <div class="px-4 py-3 flex items-center justify-between gap-2">
                   <div class="flex items-center gap-2 flex-1 min-w-0">
-                    <div class="w-7 h-7 rounded-lg bg-[var(--warning-light)] flex items-center justify-center flex-shrink-0"><svg lucideClock class="w-3.5 h-3.5 text-[var(--warning)]"></svg></div>
+                    <div class="w-7 h-7 rounded-lg bg-[var(--warning-light)] flex items-center justify-center flex-shrink-0"><svg aria-hidden="true" lucideClock class="w-3.5 h-3.5 text-[var(--warning)]"></svg></div>
                     <div class="flex flex-col min-w-0"><span class="text-xs font-bold text-[var(--text-primary)] truncate">{{ p.customerName }}</span><span class="text-[9px] text-[var(--text-muted)] truncate">{{ p.from }} ← {{ p.to }}</span></div>
                   </div>
                   <div class="flex items-center gap-2 flex-shrink-0">
                     <span class="text-xs font-extrabold text-[var(--text-primary)] tabular-nums">{{ fmtAmount(p.amount) }} ج</span>
-                    <button (click)="goTo('/financial')" class="text-[9px] font-bold px-2 py-1 rounded-lg bg-[var(--primary)] text-white">تأكيد</button>
+                    <button type="button" (click)="goTo('/financial')" class="text-[9px] font-bold px-2 py-1 rounded-lg bg-[var(--primary)] text-white">تأكيد</button>
                   </div>
                 </div>
               }
@@ -103,8 +103,8 @@
         <!-- Recent bookings -->
         <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
           <div class="flex items-center justify-between px-4 py-3 border-b border-[var(--border)]">
-            <span class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2"><svg lucideActivity class="w-4 h-4 text-[var(--primary)]"></svg>آخر الحجوزات</span>
-            <button (click)="goTo('/financial')" class="text-[10px] font-bold text-[var(--primary)]">عرض الكل</button>
+            <span class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2"><svg aria-hidden="true" lucideActivity class="w-4 h-4 text-[var(--primary)]"></svg>آخر الحجوزات</span>
+            <button type="button" (click)="goTo('/financial')" class="text-[10px] font-bold text-[var(--primary)]">عرض الكل</button>
           </div>
           <div class="flex flex-col divide-y divide-[var(--border)]">
             @if (!d.recentBookings?.length) { <div class="flex items-center justify-center py-8 text-[var(--text-muted)] text-xs">لا توجد حجوزات بعد</div> }
@@ -131,13 +131,13 @@
             { path: '/support-contacts', icon: 'phone', label: 'جهات الاتصال' },
             { path: '/profile', icon: 'user', label: 'الملف الشخصي' },
           ]; track nav.path) {
-            <button (click)="goTo(nav.path)" class="flex flex-col items-center gap-2 p-4 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] active:scale-95 transition-all">
+            <button type="button" (click)="goTo(nav.path)" class="flex flex-col items-center gap-2 p-4 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] active:scale-95 transition-all">
               <div class="w-10 h-10 rounded-xl bg-[var(--primary-light)] flex items-center justify-center">
                 @switch (nav.icon) {
-                  @case ('users') { <svg lucideUsers class="w-5 h-5 text-[var(--text-primary)]"></svg> }
-                  @case ('wallet') { <svg lucideWallet class="w-5 h-5 text-[var(--text-primary)]"></svg> }
-                  @case ('phone') { <svg lucidePhone class="w-5 h-5 text-[var(--text-primary)]"></svg> }
-                  @case ('user') { <svg lucideUser class="w-5 h-5 text-[var(--text-primary)]"></svg> }
+                  @case ('users') { <svg aria-hidden="true" lucideUsers class="w-5 h-5 text-[var(--text-primary)]"></svg> }
+                  @case ('wallet') { <svg aria-hidden="true" lucideWallet class="w-5 h-5 text-[var(--text-primary)]"></svg> }
+                  @case ('phone') { <svg aria-hidden="true" lucidePhone class="w-5 h-5 text-[var(--text-primary)]"></svg> }
+                  @case ('user') { <svg aria-hidden="true" lucideUser class="w-5 h-5 text-[var(--text-primary)]"></svg> }
                 }
               </div>
               <span class="text-xs font-bold text-[var(--text-primary)]">{{ nav.label }}</span>
@@ -158,17 +158,17 @@
 
       <div class="relative z-10 flex items-start justify-between gap-4 flex-wrap">
         <div class="flex flex-col gap-2">
-          <div class="flex items-center gap-2"><svg lucideZap class="w-5 h-5 text-white/70"></svg><span class="text-white/70 text-sm font-medium">{{ greeting() }}، مدير النظام</span></div>
+          <div class="flex items-center gap-2"><svg aria-hidden="true" lucideZap class="w-5 h-5 text-white/70"></svg><span class="text-white/70 text-sm font-medium">{{ greeting() }}، مدير النظام</span></div>
           <h1 class="text-3xl font-extrabold text-white leading-tight">لوحة تحكم تفية</h1>
           <p class="text-white/60 text-sm">آخر تحديث: {{ fmtTime(now) }} — {{ fmtDate(now) }}</p>
         </div>
         <div class="flex items-center gap-2">
           @if (d.platform?.pendingPaymentsRequiringAction > 0) {
-            <button (click)="goTo('/financial')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--warning)] text-white text-sm font-bold animate-pulse hover:opacity-90 transition-all active:scale-95">
-              <svg lucideAlertCircle class="w-4 h-4"></svg>{{ toArabic(d.platform.pendingPaymentsRequiringAction) }} طلبات دفع معلقة
+            <button type="button" (click)="goTo('/financial')" class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--warning)] text-white text-sm font-bold animate-pulse hover:opacity-90 transition-all active:scale-95">
+              <svg aria-hidden="true" lucideAlertCircle class="w-4 h-4"></svg>{{ toArabic(d.platform.pendingPaymentsRequiringAction) }} طلبات دفع معلقة
             </button>
           }
-          <button (click)="load()" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all duration-150 active:scale-90"><svg lucideRefreshCw class="w-4 h-4"></svg></button>
+          <button type="button" (click)="load()" aria-label="تحديث البيانات" class="w-10 h-10 flex items-center justify-center rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all duration-150 active:scale-90"><svg aria-hidden="true" lucideRefreshCw class="w-4 h-4"></svg></button>
         </div>
       </div>
 
@@ -194,11 +194,11 @@
       <div class="grid grid-cols-2 xl:grid-cols-4 gap-4">
 
         <!-- Revenue Summary (totalAmount / platformFee / price) -->
-        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border-2 border-[var(--primary)] shadow-[var(--shadow-md)] relative overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-200 group" (click)="goTo('/financial')">
+        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border-2 border-[var(--primary)] shadow-[var(--shadow-md)] relative overflow-hidden cursor-pointer hover:shadow-lg transition-all duration-200 group" role="button" tabindex="0" (keydown.enter)="goTo('/financial')" (click)="goTo('/financial')">
           <div class="absolute -top-8 -left-8 w-24 h-24 rounded-full bg-[var(--primary-light)] opacity-50"></div>
           <div class="flex items-center justify-between relative">
-            <div class="w-11 h-11 rounded-xl bg-[var(--primary)] flex items-center justify-center"><svg lucideBadgeDollarSign class="w-5 h-5 text-white"></svg></div>
-            <svg lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--primary)] transition-colors"></svg>
+            <div class="w-11 h-11 rounded-xl bg-[var(--primary)] flex items-center justify-center"><svg aria-hidden="true" lucideBadgeDollarSign class="w-5 h-5 text-white"></svg></div>
+            <svg aria-hidden="true" lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--primary)] transition-colors"></svg>
           </div>
           <div class="flex flex-col gap-3 relative">
             <span class="text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-wider">ملخص الإيرادات</span>
@@ -214,10 +214,10 @@
         </div>
 
         <!-- Total Users -->
-        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-sm)] cursor-pointer transition-all duration-200 group" (click)="goTo('/users')">
+        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-sm)] cursor-pointer transition-all duration-200 group" role="button" tabindex="0" (keydown.enter)="goTo('/users')" (click)="goTo('/users')">
           <div class="flex items-center justify-between">
-            <div class="w-11 h-11 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg lucideUsers class="w-5 h-5 text-[var(--text-primary)]"></svg></div>
-            <svg lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
+            <div class="w-11 h-11 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg aria-hidden="true" lucideUsers class="w-5 h-5 text-[var(--text-primary)]"></svg></div>
+            <svg aria-hidden="true" lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
           </div>
           <div class="flex flex-col gap-1">
             <span class="text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-wider">إجمالي المستخدمين</span>
@@ -227,10 +227,10 @@
         </div>
 
         <!-- Total Bookings -->
-        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-sm)] cursor-pointer transition-all duration-200 group" (click)="goTo('/financial')">
+        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-sm)] cursor-pointer transition-all duration-200 group" role="button" tabindex="0" (keydown.enter)="goTo('/financial')" (click)="goTo('/financial')">
           <div class="flex items-center justify-between">
-            <div class="w-11 h-11 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg lucideTicket class="w-5 h-5 text-[var(--text-primary)]"></svg></div>
-            <svg lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
+            <div class="w-11 h-11 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg aria-hidden="true" lucideTicket class="w-5 h-5 text-[var(--text-primary)]"></svg></div>
+            <svg aria-hidden="true" lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
           </div>
           <div class="flex flex-col gap-1">
             <span class="text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-wider">إجمالي الحجوزات</span>
@@ -244,7 +244,7 @@
 
         <!-- Operations -->
         <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-sm)] transition-all duration-200">
-          <div class="w-11 h-11 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg lucideBus class="w-5 h-5 text-[var(--text-primary)]"></svg></div>
+          <div class="w-11 h-11 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg aria-hidden="true" lucideBus class="w-5 h-5 text-[var(--text-primary)]"></svg></div>
           <div class="flex flex-col gap-1">
             <span class="text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-wider">تشغيل المنصة</span>
             <div class="flex flex-col gap-1.5">
@@ -258,10 +258,10 @@
 
       <!-- PAYOUT ROW -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] cursor-pointer hover:border-[var(--primary)] transition-all group" (click)="goTo('/payout')">
+        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] cursor-pointer hover:border-[var(--primary)] transition-all group" role="button" tabindex="0" (keydown.enter)="goTo('/payout')" (click)="goTo('/payout')">
           <div class="flex items-center justify-between">
-            <div class="w-11 h-11 rounded-xl bg-[var(--warning-light)] flex items-center justify-center"><svg lucideCircleDollarSign class="w-5 h-5 text-[var(--warning)]"></svg></div>
-            <svg lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
+            <div class="w-11 h-11 rounded-xl bg-[var(--warning-light)] flex items-center justify-center"><svg aria-hidden="true" lucideCircleDollarSign class="w-5 h-5 text-[var(--warning)]"></svg></div>
+            <svg aria-hidden="true" lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
           </div>
           <div class="flex flex-col gap-1">
             <span class="text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-wider">مستحقات الشركات</span>
@@ -269,10 +269,10 @@
             <span class="text-[10px] text-[var(--text-secondary)]">بإنتظار الصرف</span>
           </div>
         </div>
-        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] cursor-pointer hover:border-[var(--primary)] transition-all group" (click)="goTo('/payout')">
+        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] cursor-pointer hover:border-[var(--primary)] transition-all group" role="button" tabindex="0" (keydown.enter)="goTo('/payout')" (click)="goTo('/payout')">
           <div class="flex items-center justify-between">
-            <div class="w-11 h-11 rounded-xl bg-[var(--success-light)] flex items-center justify-center"><svg lucideCheckCircle class="w-5 h-5 text-[var(--success)]"></svg></div>
-            <svg lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
+            <div class="w-11 h-11 rounded-xl bg-[var(--success-light)] flex items-center justify-center"><svg aria-hidden="true" lucideCheckCircle class="w-5 h-5 text-[var(--success)]"></svg></div>
+            <svg aria-hidden="true" lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
           </div>
           <div class="flex flex-col gap-1">
             <span class="text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-wider">المدفوع للشركات</span>
@@ -280,10 +280,10 @@
             <span class="text-[10px] text-[var(--text-secondary)]">إجمالي المبالغ المدفوعة</span>
           </div>
         </div>
-        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] cursor-pointer hover:border-[var(--primary)] transition-all group" (click)="goTo('/payout')">
+        <div class="flex flex-col gap-4 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] cursor-pointer hover:border-[var(--primary)] transition-all group" role="button" tabindex="0" (keydown.enter)="goTo('/payout')" (click)="goTo('/payout')">
           <div class="flex items-center justify-between">
-            <div class="w-11 h-11 rounded-xl bg-[var(--info-light)] flex items-center justify-center"><svg lucideClock class="w-5 h-5 text-[var(--info)]"></svg></div>
-            <svg lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
+            <div class="w-11 h-11 rounded-xl bg-[var(--info-light)] flex items-center justify-center"><svg aria-hidden="true" lucideClock class="w-5 h-5 text-[var(--info)]"></svg></div>
+            <svg aria-hidden="true" lucideArrowUpRight class="w-4 h-4 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
           </div>
           <div class="flex flex-col gap-1">
             <span class="text-[11px] font-medium text-[var(--text-muted)] uppercase tracking-wider">طلبات الصرف</span>
@@ -300,7 +300,7 @@
         <div class="lg:col-span-2 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] p-5 flex flex-col gap-4">
           <div class="flex items-center justify-between flex-wrap gap-3">
             <div class="flex flex-col gap-0.5">
-              <h2 class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2"><svg lucideTrendingUp class="w-4 h-4 text-[var(--primary)]"></svg>الإيرادات — آخر ١٤ يوماً</h2>
+              <h2 class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2"><svg aria-hidden="true" lucideTrendingUp class="w-4 h-4 text-[var(--primary)]"></svg>الإيرادات — آخر ١٤ يوماً</h2>
               <p class="text-xs text-[var(--text-muted)]">مجموع ما حصله عملاء تفية</p>
             </div>
             <div class="flex items-center gap-3">
@@ -336,10 +336,10 @@
 
         <!-- Stats ring -->
         <div class="flex flex-col gap-4 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] p-5">
-          <h2 class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2"><svg lucideActivity class="w-4 h-4 text-[var(--primary)]"></svg>إحصاءات الحجوزات</h2>
+          <h2 class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2"><svg aria-hidden="true" lucideActivity class="w-4 h-4 text-[var(--primary)]"></svg>إحصاءات الحجوزات</h2>
           <div class="flex flex-col items-center gap-3">
             <div class="relative w-28 h-28">
-              <svg class="w-28 h-28 -rotate-90" viewBox="0 0 80 80">
+              <svg aria-hidden="true" class="w-28 h-28 -rotate-90" viewBox="0 0 80 80">
                 <circle cx="40" cy="40" r="36" fill="none" stroke="var(--border)" stroke-width="7"/>
                 <circle cx="40" cy="40" r="36" fill="none" stroke="var(--primary)" stroke-width="7" stroke-linecap="round" [attr.stroke-dasharray]="confirmRateDash()" class="transition-all duration-1000 ease-out"/>
               </svg>
@@ -377,7 +377,7 @@
         <!-- Platform fee -->
         <div class="flex flex-col gap-3 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] cursor-pointer hover:border-[var(--border-strong)] transition-all" (click)="goTo('/financial')">
           <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-xl bg-[var(--primary)] flex items-center justify-center"><svg lucideBadgeDollarSign class="w-4 h-4 text-white"></svg></div><span class="text-xs font-bold text-[var(--text-primary)]">رسوم المنصة</span></div>
+            <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-xl bg-[var(--primary)] flex items-center justify-center"><svg aria-hidden="true" lucideBadgeDollarSign class="w-4 h-4 text-white"></svg></div><span class="text-xs font-bold text-[var(--text-primary)]">رسوم المنصة</span></div>
             @if (d.platform?.activePlatformFee) { <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[var(--success-light)] text-[var(--success)]">نشط</span> }
             @else { <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[var(--danger-light)] text-[var(--danger)]">غير مفعل</span> }
           </div>
@@ -386,12 +386,12 @@
             <p class="text-[10px] text-[var(--text-muted)]">{{ d.platform.activePlatformFee.label ?? 'نسبة مئوية من سعر التذكرة' }}</p>
           } @else {
             <p class="text-sm text-[var(--text-muted)]">لم يتم تحديد رسوم المنصة بعد</p>
-            <button (click)="goTo('/financial'); $event.stopPropagation()" class="text-xs font-bold text-[var(--primary)] hover:underline self-start">إضافة رسوم الآن ←</button>
+            <button type="button" (click)="goTo('/financial'); $event.stopPropagation()" class="text-xs font-bold text-[var(--primary)] hover:underline self-start">إضافة رسوم الآن ←</button>
           }
         </div>
         <!-- Payment accounts -->
-        <div class="flex flex-col gap-3 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] cursor-pointer hover:border-[var(--border-strong)] transition-all" (click)="goTo('/financial')">
-          <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg lucideShield class="w-4 h-4 text-[var(--text-primary)]"></svg></div><span class="text-xs font-bold text-[var(--text-primary)]">حسابات استقبال الدفع</span></div>
+        <div class="flex flex-col gap-3 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] cursor-pointer hover:border-[var(--border-strong)] transition-all" role="button" tabindex="0" (keydown.enter)="goTo('/financial')" (click)="goTo('/financial')">
+          <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg aria-hidden="true" lucideShield class="w-4 h-4 text-[var(--text-primary)]"></svg></div><span class="text-xs font-bold text-[var(--text-primary)]">حسابات استقبال الدفع</span></div>
           <div class="flex items-end justify-between">
             <div class="flex flex-col gap-0.5">
               <div class="flex items-baseline gap-1"><span class="text-3xl font-extrabold text-[var(--text-primary)] tabular-nums">{{ toArabic(d.platform?.activePaymentAccounts ?? 0) }}</span><span class="text-xs text-[var(--text-muted)]">/ {{ toArabic(d.platform?.totalPaymentAccounts ?? 0) }}</span></div>
@@ -402,7 +402,7 @@
         </div>
         <!-- Payment method breakdown -->
         <div class="flex flex-col gap-3 p-5 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)]">
-          <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg lucideWallet class="w-4 h-4 text-[var(--text-primary)]"></svg></div><span class="text-xs font-bold text-[var(--text-primary)]">طرق الدفع</span></div>
+          <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-xl bg-[var(--primary-light)] flex items-center justify-center"><svg aria-hidden="true" lucideWallet class="w-4 h-4 text-[var(--text-primary)]"></svg></div><span class="text-xs font-bold text-[var(--text-primary)]">طرق الدفع</span></div>
           <div class="flex flex-col gap-2">
             @for (item of d.revenue?.paymentMethodBreakdown ?? []; track item.method) {
               <div class="flex items-center justify-between gap-2">
@@ -421,8 +421,8 @@
         <!-- Recent bookings -->
         <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
           <div class="flex items-center justify-between px-5 py-4 border-b border-[var(--border)]">
-            <h2 class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2"><svg lucideActivity class="w-4 h-4 text-[var(--primary)]"></svg>آخر الحجوزات</h2>
-            <button (click)="goTo('/financial')" class="text-[10px] font-bold text-[var(--text-muted)] hover:text-[var(--primary)] flex items-center gap-1 transition-colors">عرض الكل<svg lucideArrowLeft class="w-3 h-3"></svg></button>
+            <h2 class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2"><svg aria-hidden="true" lucideActivity class="w-4 h-4 text-[var(--primary)]"></svg>آخر الحجوزات</h2>
+            <button type="button" (click)="goTo('/financial')" class="text-[10px] font-bold text-[var(--text-muted)] hover:text-[var(--primary)] flex items-center gap-1 transition-colors">عرض الكل<svg aria-hidden="true" lucideArrowLeft class="w-3 h-3"></svg></button>
           </div>
           <div class="flex flex-col divide-y divide-[var(--border)]">
             @if (!d.recentBookings?.length) { <div class="flex items-center justify-center py-10 text-[var(--text-muted)] text-sm">لا توجد حجوزات بعد</div> }
@@ -444,14 +444,14 @@
         <div class="bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] overflow-hidden">
           <div class="flex items-center justify-between px-5 py-4 border-b border-[var(--border)]">
             <h2 class="text-sm font-bold text-[var(--text-primary)] flex items-center gap-2">
-              <svg lucideClock class="w-4 h-4 text-[var(--warning)]"></svg>يحتاج تدخلك
+              <svg aria-hidden="true" lucideClock class="w-4 h-4 text-[var(--warning)]"></svg>يحتاج تدخلك
               @if (d.pendingActions?.length > 0) { <span class="px-1.5 py-0.5 rounded-full bg-[var(--warning-light)] text-[var(--warning)] text-[10px] font-bold">{{ toArabic(d.pendingActions.length) }}</span> }
             </h2>
-            <button (click)="goTo('/financial')" class="text-[10px] font-bold text-[var(--primary)] hover:underline flex items-center gap-1">إدارة الكل<svg lucideArrowLeft class="w-3 h-3"></svg></button>
+            <button type="button" (click)="goTo('/financial')" class="text-[10px] font-bold text-[var(--primary)] hover:underline flex items-center gap-1">إدارة الكل<svg aria-hidden="true" lucideArrowLeft class="w-3 h-3"></svg></button>
           </div>
           @if (!d.pendingActions?.length) {
             <div class="flex flex-col items-center justify-center py-12 gap-3">
-              <div class="w-12 h-12 rounded-full bg-[var(--success-light)] flex items-center justify-center"><svg lucideCheckCircle class="w-6 h-6 text-[var(--success)]"></svg></div>
+              <div class="w-12 h-12 rounded-full bg-[var(--success-light)] flex items-center justify-center"><svg aria-hidden="true" lucideCheckCircle class="w-6 h-6 text-[var(--success)]"></svg></div>
               <div class="text-center"><p class="text-sm font-semibold text-[var(--text-primary)]">كل شيء على ما يرام ✓</p><p class="text-[10px] text-[var(--text-muted)] mt-1">لا توجد طلبات معلقة</p></div>
             </div>
           }
@@ -460,12 +460,12 @@
               <div class="px-5 py-3.5 hover:bg-[var(--bg-base)] transition-colors">
                 <div class="flex items-center justify-between gap-3">
                   <div class="flex items-start gap-3 flex-1 min-w-0">
-                    <div class="w-7 h-7 rounded-lg bg-[var(--warning-light)] flex items-center justify-center flex-shrink-0 mt-0.5"><svg lucideClock class="w-3.5 h-3.5 text-[var(--warning)]"></svg></div>
+                    <div class="w-7 h-7 rounded-lg bg-[var(--warning-light)] flex items-center justify-center flex-shrink-0 mt-0.5"><svg aria-hidden="true" lucideClock class="w-3.5 h-3.5 text-[var(--warning)]"></svg></div>
                     <div class="flex flex-col min-w-0"><span class="text-xs font-bold text-[var(--text-primary)] truncate">{{ p.customerName }}</span><span class="text-[10px] text-[var(--text-muted)] truncate">{{ p.from }} ← {{ p.to }} · {{ methodLabel(p.paymentMethod) }}</span></div>
                   </div>
                   <div class="flex flex-col items-end flex-shrink-0 gap-1">
                     <span class="text-xs font-extrabold text-[var(--text-primary)] tabular-nums">{{ fmtAmount(p.amount) }} ج</span>
-                    <button (click)="goTo('/financial')" class="text-[10px] font-bold text-[var(--primary)] px-2 py-0.5 rounded-lg bg-[var(--primary-light)] hover:bg-[var(--border)] transition-all">تأكيد ←</button>
+                    <button type="button" (click)="goTo('/financial')" class="text-[10px] font-bold text-[var(--primary)] px-2 py-0.5 rounded-lg bg-[var(--primary-light)] hover:bg-[var(--border)] transition-all">تأكيد ←</button>
                   </div>
                 </div>
               </div>
@@ -482,17 +482,17 @@
           { path: '/financial', icon: 'wallet', label: 'المالية', sub: 'مدفوعات ورسوم', count: toArabic(d.platform?.pendingPaymentsRequiringAction ?? 0) + ' معلق' },
           { path: '/financial', icon: 'shield', label: 'حسابات الدفع', sub: 'بوابات استقبال الحجوزات', count: toArabic(d.platform?.activePaymentAccounts ?? 0) + ' نشط' },
         ]; track nav.path + nav.label) {
-          <button (click)="goTo(nav.path)" class="flex flex-col gap-3 p-4 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] text-right hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-sm)] transition-all duration-150 active:scale-[0.98] group">
+          <button type="button" (click)="goTo(nav.path)" class="flex flex-col gap-3 p-4 bg-[var(--bg-card)] rounded-2xl border border-[var(--border)] text-right hover:border-[var(--border-strong)] hover:shadow-[var(--shadow-sm)] transition-all duration-150 active:scale-[0.98] group">
             <div class="flex items-center justify-between">
               <div class="w-9 h-9 rounded-xl bg-[var(--primary-light)] flex items-center justify-center">
                 @switch (nav.icon) {
-                  @case ('users') { <svg lucideUsers class="w-4 h-4 text-[var(--text-primary)]"></svg> }
-                  @case ('building-2') { <svg lucideBuilding2 class="w-4 h-4 text-[var(--text-primary)]"></svg> }
-                  @case ('wallet') { <svg lucideWallet class="w-4 h-4 text-[var(--text-primary)]"></svg> }
-                  @case ('shield') { <svg lucideShield class="w-4 h-4 text-[var(--text-primary)]"></svg> }
+                  @case ('users') { <svg aria-hidden="true" lucideUsers class="w-4 h-4 text-[var(--text-primary)]"></svg> }
+                  @case ('building-2') { <svg aria-hidden="true" lucideBuilding2 class="w-4 h-4 text-[var(--text-primary)]"></svg> }
+                  @case ('wallet') { <svg aria-hidden="true" lucideWallet class="w-4 h-4 text-[var(--text-primary)]"></svg> }
+                  @case ('shield') { <svg aria-hidden="true" lucideShield class="w-4 h-4 text-[var(--text-primary)]"></svg> }
                 }
               </div>
-              <svg lucideArrowLeft class="w-3.5 h-3.5 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
+              <svg aria-hidden="true" lucideArrowLeft class="w-3.5 h-3.5 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 transition-opacity"></svg>
             </div>
             <div class="flex flex-col gap-0.5"><span class="text-sm font-bold text-[var(--text-primary)]">{{ nav.label }}</span><span class="text-[10px] text-[var(--text-muted)]">{{ nav.sub }}</span></div>
             <span class="text-xs font-extrabold text-[var(--primary)] tabular-nums self-start">{{ nav.count }}</span>
@@ -504,4 +504,4 @@
     </div>
   }
 
-</div>
+</section>

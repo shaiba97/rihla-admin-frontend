@@ -13,22 +13,25 @@ import {
   template: `
     <div dir="rtl" class="border border-[var(--border)] rounded-2xl overflow-hidden bg-[var(--bg-card)]">
       <!-- Toolbar -->
-      <div class="flex flex-wrap items-center gap-1 px-3 py-2 border-b border-[var(--border)] bg-[var(--bg-base)]">
-        <button type="button" (click)="exec('formatBlock', '<h1>')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="عنوان"><svg lucideHeading1 class="w-4 h-4"></svg></button>
-        <button type="button" (click)="exec('formatBlock', '<h2>')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="عنوان فرعي"><svg lucideHeading2 class="w-4 h-4"></svg></button>
-        <button type="button" (click)="exec('formatBlock', '<h3>')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="عنوان ثالث"><svg lucideHeading3 class="w-4 h-4"></svg></button>
+      <div role="toolbar" aria-label="أدوات التنسيق" class="flex flex-wrap items-center gap-1 px-3 py-2 border-b border-[var(--border)] bg-[var(--bg-base)]">
+        <button type="button" (click)="exec('formatBlock', '<h1>')" aria-label="عنوان" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="عنوان"><svg aria-hidden="true" lucideHeading1 class="w-4 h-4"></svg></button>
+        <button type="button" (click)="exec('formatBlock', '<h2>')" aria-label="عنوان فرعي" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="عنوان فرعي"><svg aria-hidden="true" lucideHeading2 class="w-4 h-4"></svg></button>
+        <button type="button" (click)="exec('formatBlock', '<h3>')" aria-label="عنوان ثالث" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="عنوان ثالث"><svg aria-hidden="true" lucideHeading3 class="w-4 h-4"></svg></button>
         <span class="w-px h-6 bg-[var(--border)] mx-1"></span>
-        <button type="button" (click)="exec('bold')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors font-bold" title="عريض"><svg lucideBold class="w-4 h-4"></svg></button>
-        <button type="button" (click)="exec('italic')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors italic" title="مائل"><svg lucideItalic class="w-4 h-4"></svg></button>
-        <button type="button" (click)="exec('underline')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors underline" title="تسطير"><svg lucideUnderline class="w-4 h-4"></svg></button>
+        <button type="button" (click)="exec('bold')" aria-label="عريض" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors font-bold" title="عريض"><svg aria-hidden="true" lucideBold class="w-4 h-4"></svg></button>
+        <button type="button" (click)="exec('italic')" aria-label="مائل" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors italic" title="مائل"><svg aria-hidden="true" lucideItalic class="w-4 h-4"></svg></button>
+        <button type="button" (click)="exec('underline')" aria-label="تسطير" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors underline" title="تسطير"><svg aria-hidden="true" lucideUnderline class="w-4 h-4"></svg></button>
         <span class="w-px h-6 bg-[var(--border)] mx-1"></span>
-        <button type="button" (click)="exec('insertUnorderedList')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="قائمة نقطية"><svg lucideList class="w-4 h-4"></svg></button>
-        <button type="button" (click)="exec('insertOrderedList')" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="قائمة مرقمة"><svg lucideListOrdered class="w-4 h-4"></svg></button>
+        <button type="button" (click)="exec('insertUnorderedList')" aria-label="قائمة نقطية" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="قائمة نقطية"><svg aria-hidden="true" lucideList class="w-4 h-4"></svg></button>
+        <button type="button" (click)="exec('insertOrderedList')" aria-label="قائمة مرقمة" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="قائمة مرقمة"><svg aria-hidden="true" lucideListOrdered class="w-4 h-4"></svg></button>
         <span class="w-px h-6 bg-[var(--border)] mx-1"></span>
-        <button type="button" (click)="insertLink()" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="رابط"><svg lucideLink class="w-4 h-4"></svg></button>
+        <button type="button" (click)="insertLink()" aria-label="رابط" class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-[var(--primary-light)] hover:text-[var(--primary)] text-[var(--text-muted)] transition-colors" title="رابط"><svg aria-hidden="true" lucideLink class="w-4 h-4"></svg></button>
       </div>
       <!-- Editor -->
       <div #editorRef
+        role="textbox"
+        aria-multiline="true"
+        aria-label="محرر النص"
         [attr.contenteditable]="true"
         (input)="onInput()"
         class="min-h-[300px] p-4 text-sm text-[var(--text-primary)] leading-relaxed outline-none focus:ring-2 focus:ring-[var(--primary)]/20 prose prose-sm max-w-none"
